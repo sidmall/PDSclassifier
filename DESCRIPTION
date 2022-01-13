@@ -1,0 +1,31 @@
+Package: PDSclassifier
+Title: Pathway Derived Subtypes of Colorectal Cancer
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Sudhir",
+             family = "Malla",
+             role = c("aut", "cre"),
+             email = "s.malla@qub.ac.uk",
+             comment = c(ORCID = "0000-0001-5862-3815")),
+      person(given = "Philip",
+             family = "Dunne",
+             role = "aut",
+             email = "p.dunne@qub.ac.uk",
+             comment = c(ORCID = "0000-0001-9160-283X")))
+Description: An ontology-based classifier of colorectal cancer
+    that utilises pathway-level methods to stratify transcriptomic data
+    into molecularly and biologically distinct subtypes. It can be applied
+    to both human and mice.
+License: MIT + file LICENSE
+URL: https://dunne-lab.com/
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    beepr (>= 1.3),
+    dplyr (>= 0.8.3),
+    GSVA (>= 1.26.0),
+    sva (>= 3.26.0)
+Depends: 
+    R (>= 2.10)
