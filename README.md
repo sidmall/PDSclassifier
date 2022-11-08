@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-**PDSclassifier** R package provides an ontology-based molecular classification system for colorectal cancer (CRC), which can be applied to gene expression profiles to stratify into three PDS (Pathway Derived Subtype): PDS1, PDS2 and PDS3, with distinct molecular biology.
+*PDSclassifier* R package provides an ontology-based molecular classification system for colorectal cancer (CRC), which can be applied to gene expression profiles to stratify into three PDS (Pathway Derived Subtype): PDS1, PDS2 and PDS3, with distinct molecular biology.
 
 ## Installation
 
@@ -24,6 +24,8 @@ library(PDSclassifier)
 pds.calls <- PDSpredict(testData, species = 'human', threshold = 0.6)
 ```
 
-**PDSclassifier** can be applied to both human and mouse transcriptomic data with parameter `species = c("human", "mouse")`.
-The default prediction probability threshold of 0.6 has been set. It can be altered anywhere between 0 (less stringent) to 1 (very stringent). However, recommendation is be stay between 0.5-0.7 to retain enough samples without losing underlying biology that defines PDS.
+*PDSclassifier* can be applied to both human and mouse transcriptomic data with parameter:
+`species = c("human", "mouse")`.
+
+The default prediction probability `threshold = 0.6` has been set. It can be altered anywhere between 0 (less stringent) to 1 (very stringent). However, recommendation is be stay between 0.5-0.7 to retain enough samples without losing underlying biology that defines PDS.
 
