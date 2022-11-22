@@ -16,7 +16,7 @@ Description: An ontology-based classifier of colorectal cancer
     that utilises pathway-level methods to stratify transcriptomic data
     into molecularly and biologically distinct subtypes. It can be applied
     to both human and mice.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 URL: https://dunne-lab.com/
 Encoding: UTF-8
 LazyData: true
