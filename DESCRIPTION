@@ -1,5 +1,5 @@
 Package: PDSclassifier
-Title: Pathway Derived Subtypes of Colorectal Cancer
+Title: Pathway-Derived Subtypes of Colorectal Cancer
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Sudhir",
@@ -12,20 +12,24 @@ Authors@R:
              role = "aut",
              email = "p.dunne@qub.ac.uk",
              comment = c(ORCID = "0000-0001-9160-283X")))
-Description: An ontology-based classifier of colorectal cancer
-    that utilises pathway-level methods to stratify transcriptomic data
-    into molecularly and biologically distinct subtypes. It can be applied
-    to both human and mice.
+Description: An pathway-based classifier of colorectal cancer
+    that utilises pathway-level scores to stratify transcriptomic data
+    into molecularly and biologically distinct subtypes, called Pathway-Derived Subtype (PDS). 
+    It can be applied to both human and mice.
 License: GPL (>= 3)
-URL: https://dunne-lab.com/
+URL: https://dunne-lab.com/, https://github.com/sidmall/PDSclassifier
+BugReports: https://github.com/sidmall/PDSclassifier/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
-    beepr (>= 1.3),
+    caret (>= 6.0.93),
     dplyr (>= 0.8.3),
     GSVA (>= 1.26.0),
+    kernlab (>= 0.9.31),
     sva (>= 3.26.0)
 Depends: 
     R (>= 2.10)
+Suggests: 
+    beepr
