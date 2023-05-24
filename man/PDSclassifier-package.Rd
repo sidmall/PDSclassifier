@@ -4,14 +4,16 @@
 \name{PDSclassifier-package}
 \alias{PDSclassifier}
 \alias{PDSclassifier-package}
-\title{PDSclassifier: Pathway Derived Subtypes of Colorectal Cancer}
+\title{PDSclassifier: Pathway-Derived Subtypes of Colorectal Cancer}
 \description{
-An ontology-based classifier of colorectal cancer that utilises pathway-level methods to stratify transcriptomic data into molecularly and biologically distinct subtypes. It can be applied to both human and mice.
+An pathway-based classifier of colorectal cancer that utilises pathway-level scores to stratify transcriptomic data into molecularly and biologically distinct subtypes, called Pathway-Derived Subtype (PDS). It can be applied to both human and mice.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://dunne-lab.com/}
+  \item \url{https://github.com/sidmall/PDSclassifier}
+  \item Report bugs at \url{https://github.com/sidmall/PDSclassifier/issues}
 }
 
 }

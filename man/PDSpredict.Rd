@@ -17,7 +17,9 @@ PDSpredict(x, species = c("human", "mouse"), threshold = 0.6)
 a dataframe with Sample ID, PDS prediction scores for each subtye, PDS prediction and PDS prediction with threshold set by user (default 0.6)
 }
 \description{
-PDSpredict gives PDS (Pathway Derived Subtypes) calls and prediction scores from input expression data
+PDSpredict function provides a pathway-derived molecular classifications into three Pathway-Derived Subtypes (PDS): PDS1, PDS2, and PDS3.
+It calculates PDS prediction probability scores as an indication of how heterogeneous a sample is with these PDS-defined biology.
+The default threshold of 0.6 has been applied to get PDS calls from the prediction probability scores.
 }
 \author{
 Sudhir Malla
