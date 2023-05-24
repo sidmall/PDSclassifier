@@ -14,7 +14,7 @@ calculateSMI(data, datatype = c("bulk", "sc"), species = c("human", "mouse"))
 \item{species}{between 'human' and 'mouse', select one based on whether the input expression data is derived from human or mouse}
 }
 \value{
-a dataframe with rows as samples/cells, MYR Targets, PRC Targets (ssGSEA scores), SMI_unscaled, and SMI.
+a dataframe with rows as samples/cells, MYC Targets, PRC Targets (ssGSEA scores), SMI_unscaled, and SMI.
 }
 \description{
 This function calculates the 'Stem Maturation Index' (SMI), a transcriptomic measure that indicates how well the sample or cell aligns along the stem-differentiation scale.

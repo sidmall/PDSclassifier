@@ -7,7 +7,7 @@
 #' @param datatype is the data derived from bulk tissue or single-cell (sc)?
 #' @param species between 'human' and 'mouse', select one based on whether the input expression data is derived from human or mouse
 #'
-#' @return a dataframe with rows as samples/cells, MYR Targets, PRC Targets (ssGSEA scores), SMI_unscaled, and SMI.
+#' @return a dataframe with rows as samples/cells, MYC Targets, PRC Targets (ssGSEA scores), SMI_unscaled, and SMI.
 #' @export
 #'
 #' @author Sudhir Malla
