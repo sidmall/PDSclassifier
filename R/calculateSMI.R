@@ -42,7 +42,7 @@ calculateSMI <- function(data, datatype = c("bulk", "sc"), species = c("human", 
     cnts <- cntEval(data)
     ### Check the proportion of genes in each geneset which are present in the expression data
     genes_matched_prop <- lapply(geneset,
-                                 function(genes) sum(genes %in% rownames(cnts)) / length(genes))
+                                 function(genes) sum(genes %in% cnts@Dimnames[[1]]) / length(genes))
 
     ## if less than 5 genes, stop or else calculate scores
     if(all((genes_matched_prop < 0.05) == TRUE)) {
@@ -121,6 +121,6 @@ cntEval <- function (obj)
   if (!inherits(cnts, what = "dgCMatrix")) {
     cnts <- Matrix::Matrix(as.matrix(cnts), sparse = TRUE)
   }
-  cnts <- cnts[tabulate(summary(cnts@i)) != 0, , drop = FALSE]
+  #cnts <- cnts[tabulate(summary(cnts@i)) != 0, , drop = FALSE]
   return(cnts)
 }
