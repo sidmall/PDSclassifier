@@ -121,6 +121,6 @@ cntEval <- function (obj)
   if (!inherits(cnts, what = "dgCMatrix")) {
     cnts <- Matrix::Matrix(as.matrix(cnts), sparse = TRUE)
   }
-  cnts <- cnts[tabulate(summary(cnts)$i) != 0, , drop = FALSE]
+  cnts <- cnts[tabulate(summary(cnts@i)) != 0, , drop = FALSE]
   return(cnts)
 }
