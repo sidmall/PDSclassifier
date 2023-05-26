@@ -2,3 +2,4 @@
 
 export(PDSpredict)
 export(calculateSMI)
+export(highMeanGene)
