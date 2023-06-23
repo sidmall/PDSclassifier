@@ -96,7 +96,7 @@ calculateSMI <- function(data, datatype = c("bulk", "sc"), species = c("human", 
   myc_prc_score_copy <- as.data.frame(myc_prc_score)
 
   ## Calculate SMI (unscaled) ----
-  myc_prc_score_copy[["SMI_unscaled"]] <- myc_prc_score_copy[["PRC_Targets"]]-myc_prc_score_copy[["MYC_Targets"]]
+  myc_prc_score_copy[["SMI_unscaled"]] <- myc_prc_score_copy[,1]-myc_prc_score_copy[,2] ## PRC - MYC
   ## Scale SMI between -1 to 1 ----
   myc_prc_score_copy[["SMI"]] <- scales::rescale(myc_prc_score_copy[["SMI_unscaled"]], to = c(-1, 1))
 
