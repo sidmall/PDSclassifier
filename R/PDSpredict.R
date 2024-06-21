@@ -7,9 +7,9 @@
 #'
 #' @param x gene expression data in dataframe format with first column as genes
 #' @param species between 'human' and 'mouse', select one based on whether the input expression data is derived from human or mouse
-#' @param threshold set threshold between 0 to 1 for PDS calls, default 0.6. Those do not meet the threshold are indicated a 'mixed' bioloical subtype.
+#' @param threshold set threshold between 0 to 1 for PDS calls, default 0.6. Those do not meet the threshold are indicated a 'mixed' biological subtype.
 #'
-#' @return a dataframe with Sample ID, PDS prediction scores for each subtye, PDS prediction and PDS prediction with threshold set by user (default 0.6)
+#' @return a dataframe with Sample ID, PDS prediction scores for each subtype, PDS prediction and PDS prediction with threshold set by user (default 0.6)
 #' @export
 #'
 #' @author Sudhir Malla
@@ -47,10 +47,26 @@ PDSpredict <- function(x, species = c("human", "mouse"), threshold = 0.6) {
   ### set seed
   if (as.Date(paste0(R.version$year,'-',R.version$month,'-',R.version$day)) >= as.Date('2019-04-26'))
   {suppressWarnings(set.seed(123, sample.kind = 'Rounding'))} else{set.seed(123)}
-  ### ssGSEA
-  y <- GSVA::gsva(x, c2.geneset, max.sz = Inf, ## min.size default as it may lead to no gene set scores
-                  verbose = F, method = "ssgsea", parallel.sz = 4,
-                  ssgsea.norm = F)
+
+
+  ### package version change of GSVA
+  if(utils::packageVersion("GSVA") <= "1.48.3" ) {
+
+    ### ssGSEA
+    y <- suppressWarnings(GSVA::gsva(x, c2.geneset, max.sz = Inf, ## min.size default as it may lead to no gene set scores
+                                     verbose = F, method = "ssgsea", parallel.sz = 4,
+                                     ssgsea.norm = F))
+
+  } else {
+
+    ### ssGSEA -- update
+    ssgsea_par <- GSVA::ssgseaParam(x, c2.geneset,
+                                    maxSize = Inf, ## min.size default as it may lead to no gene set scores
+                                    normalize = F)
+    y <- suppressWarnings(GSVA::gsva(ssgsea_par, verbose = F, BPPARAM = BiocParallel::SnowParam(workers = 4)))
+
+  }
+
   ### Apply scaling with fixed value from training set.
   minmax_diff <- 20928.93
   y.1 <- as.data.frame(sapply(as.data.frame(y), function(s) {s/(minmax_diff)}))
@@ -114,7 +130,9 @@ PDSpredict <- function(x, species = c("human", "mouse"), threshold = 0.6) {
                                              ifelse(PDS.predict[["PDS3"]] > threshold, "PDS3", "Mixed")))
 
   cat("Classification Complete!\n")
-  beepr::beep(sound = 4)
+  if(any(rownames(utils::installed.packages()) %in% "beepr"))
+    beepr::beep(sound = 4)
+
 
   PDS.predict <- dplyr::mutate(PDS.predict, PDS_call = factor(PDS.predict$PDS_call,
                                                               levels = c('PDS1', 'PDS2',

@@ -11,10 +11,10 @@ PDSpredict(x, species = c("human", "mouse"), threshold = 0.6)
 
 \item{species}{between 'human' and 'mouse', select one based on whether the input expression data is derived from human or mouse}
 
-\item{threshold}{set threshold between 0 to 1 for PDS calls, default 0.6. Those do not meet the threshold are indicated a 'mixed' bioloical subtype.}
+\item{threshold}{set threshold between 0 to 1 for PDS calls, default 0.6. Those do not meet the threshold are indicated a 'mixed' biological subtype.}
 }
 \value{
-a dataframe with Sample ID, PDS prediction scores for each subtye, PDS prediction and PDS prediction with threshold set by user (default 0.6)
+a dataframe with Sample ID, PDS prediction scores for each subtype, PDS prediction and PDS prediction with threshold set by user (default 0.6)
 }
 \description{
 PDSpredict function provides a pathway-derived molecular classifications into three Pathway-Derived Subtypes (PDS): PDS1, PDS2, and PDS3.

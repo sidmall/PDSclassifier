@@ -1,6 +1,6 @@
 #' calculateSMI
 #'
-#' This function calculates the 'Stem Maturation Index' (SMI), a transcriptomic measure that indicates how well the sample or cell aligns along the stem-differentiation scale.
+#' This function calculates the 'Stem Maturation Index' (SMI), a transcriptomic measure that indicates how well a sample or cell aligns along the stem-differentiation scale.
 #' It also provides the MYC targets and PRC targets single-sample or single-cell scores.
 #'
 #' @param data gene expression matrix (with rows as genes) or singlec-cell: seurat/sce objects
@@ -42,7 +42,7 @@ calculateSMI <- function(data, datatype = c("bulk", "sc"), species = c("human", 
     cnts <- cntEval(data)
     ### Check the proportion of genes in each geneset which are present in the expression data
     genes_matched_prop <- lapply(geneset,
-                                 function(genes) sum(genes %in% cnts@Dimnames[[1]]) / length(genes))
+                                 function(genes) sum(genes %in% rownames(cnts)) / length(genes))
 
     ## if less than 5 genes, stop or else calculate scores
     if(all((genes_matched_prop < 0.05) == TRUE)) {
@@ -50,11 +50,27 @@ calculateSMI <- function(data, datatype = c("bulk", "sc"), species = c("human", 
     }
     else {
 
-      ## run escape to calculate scores ----
-      myc_prc_score <- escape::enrichIt(obj = data,
-                                        gene.sets = geneset, method = 'ssGSEA',
-                                        groups = 10000, cores = 2,
-                                        min.size = 5)
+      ### escape version change
+      if(utils::packageVersion("escape") <= "1.6.0") {
+
+        ## run escape to calculate scores ----
+        myc_prc_score <- escape::enrichIt(obj = data,
+                                          gene.sets = geneset, method = 'ssGSEA',
+                                          groups = 10000, cores = 4,
+                                          min.size = 5)
+
+      } else {
+
+        ## run escape to calculate scores ----
+        myc_prc_score <- escape::escape.matrix(input.data = data,
+                                               gene.sets = geneset, method = 'ssGSEA',
+                                               groups = 10000,
+                                               min.size = 5,
+                                               BPPARAM = BiocParallel::MulticoreParam(workers = 4)
+                                               )
+
+      }
+
     }
 
   } else if(datatype == "bulk") {
@@ -75,14 +91,30 @@ calculateSMI <- function(data, datatype = c("bulk", "sc"), species = c("human", 
       }
       else {
 
-        ## if matrix, calculate ssgsea score ----
-        myc_prc_score <- GSVA::gsva(data,
-                                    geneset,
-                                    min.sz=5,
-                                    max.sz=Inf,
-                                    verbose = T,
-                                    method = 'ssgsea',
-                                    ssgsea.norm = F)
+        ### package version GSVA update
+        if(utils::packageVersion("GSVA") <= "1.48.3") {
+
+          ## if matrix, calculate ssgsea score ----
+          myc_prc_score <- GSVA::gsva(data,
+                                      geneset,
+                                      min.sz=5,
+                                      max.sz=Inf,
+                                      verbose = T,
+                                      method = 'ssgsea',
+                                      ssgsea.norm = F)
+
+        } else{
+
+          ## if matrix, calculate ssgsea score ----
+          ssgsea_par <- GSVA::ssgseaParam(data,
+                                          geneset,
+                                          minSize = 5,
+                                          maxSize = Inf,
+                                          normalize = F)
+          myc_prc_score <- GSVA::gsva(ssgsea_par,
+                                      verbose = F)
+
+        }
 
         ## Take the scores and transpose it ----
         myc_prc_score <- t(myc_prc_score)
@@ -110,7 +142,7 @@ calculateSMI <- function(data, datatype = c("bulk", "sc"), species = c("human", 
 cntEval <- function (obj)
 {
   if (inherits(x = obj, what = "Seurat")) {
-    cnts <- obj@assays[["RNA"]]@counts
+    cnts <- Seurat::GetAssayData(obj)
   }
   else if (inherits(x = obj, what = "SingleCellExperiment")) {
     cnts <- SingleCellExperiment::counts(obj)
@@ -121,6 +153,5 @@ cntEval <- function (obj)
   if (!inherits(cnts, what = "dgCMatrix")) {
     cnts <- Matrix::Matrix(as.matrix(cnts), sparse = TRUE)
   }
-  #cnts <- cnts[tabulate(summary(cnts@i)) != 0, , drop = FALSE]
   return(cnts)
 }
