@@ -30,7 +30,7 @@ pds_calls <- PDSpredict(testData, species = 'human', threshold = 0.6)
 *PDSclassifier* can be applied to both human and mouse transcriptomic data with parameter:
 `species = c("human", "mouse")`. The default prediction probability `threshold = 0.6` has been set. The PDS prediction probability ranges between 0 to 1. The recommendation is be stay between 0.5-0.7 to retain enough samples without losing underlying biology that defines PDS.
 
-<br>
+
 Additionally, `calculateSMI()` function enable users to determine if the given sample (bulk tissue or single-cell) is transcriptionally stem-like or differentiated-like with *Stem Maturation Index (SMI)*. The outcome provides single sample gene set enrichment analysis (ssGSEA) score for MYC targets and PRC targets, and from these, *SMI* is calculate (provided unscaled and scaled (-1 to 1)).
 ``` r
 smi_data <- calculateSMI(as.matrix(testdata[,-1]), datatype = "bulk", species = "human")
