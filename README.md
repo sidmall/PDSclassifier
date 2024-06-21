@@ -22,8 +22,6 @@ devtools::install_github('sidmall/PDSclassifier')
 ## Usage
 
 An example where using the `testData` from the R package, PDS classification can be made with `PDSpredict()` function.
-<p><em>NOTE:</em> `testData` consists of <em>n</em> = 40 CRC samples from FOCUS ([GSE156915](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE156915)) cohort used in this study.
-</p>
 ``` r
 library(PDSclassifier)
 pds_calls <- PDSpredict(testData, species = 'human', threshold = 0.6)
