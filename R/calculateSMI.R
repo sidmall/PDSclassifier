@@ -73,7 +73,9 @@ calculateSMI <- function(data, datatype = c("bulk", "sc"), species = c("human", 
 
     }
 
-  } else if(datatype == "bulk") {
+  }
+
+  if(datatype == "bulk") {
 
     ## check if the data is in matrix format ----
     if(!is.matrix(data)) {
